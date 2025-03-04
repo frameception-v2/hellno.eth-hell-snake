@@ -249,6 +249,17 @@ export default function Frame() {
     return <div>Loading...</div>;
   }
 
+  const [score, setScore] = useState(0);
+  
+  // Score animation effect
+  useEffect(() => {
+    const scoreElement = document.getElementById('score-display');
+    if (scoreElement) {
+      scoreElement.classList.add('score-bounce');
+      setTimeout(() => scoreElement.classList.remove('score-bounce'), 200);
+    }
+  }, [score]);
+
   return (
     <div
       style={{
@@ -258,6 +269,14 @@ export default function Frame() {
         paddingRight: context?.client.safeAreaInsets?.right ?? 0,
       }}
     >
+      {/* Animated score display */}
+      <div 
+        id="score-display"
+        className="absolute top-4 right-4 text-2xl font-bold 
+                 text-purple-500 transition-transform duration-200"
+      >
+        Score: {score}
+      </div>
       {/* Farcaster Frame v2 Meta Tags */}
       <meta property="fc:frame" content="vNext" />
       <meta property="fc:frame:image" content={`${process.env.NEXT_PUBLIC_SITE_URL}/api/opengraph-image`} />

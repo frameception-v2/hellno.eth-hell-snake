@@ -8,7 +8,7 @@ Here's the structured todo list following your requirements:
 
 **UI Components & Interactions**
 - [x] Create CRT screen effect using CSS radial gradients (`styles.css`)
-- [ ] Build animated score display with DOM text node (`ui.js`)
+- [x] Build animated score display with DOM text node (`ui.js`)
 - [ ] Implement directional control buttons with hover states (`controls.css`)
 - [ ] Create victory/defeat modals with CSS transitions (`modals.css`)
 - [x] Add touch event listeners for mobile controls (`input.js`)
