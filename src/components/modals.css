@@ -39,7 +39,9 @@
   margin-bottom: 1rem;
   color: #c026d3;
   animation: pulse 1.5s infinite;
-  will-change: opacity, transform; /* Moved here for better performance */
+  will-change: opacity, transform;
+  transform: translateZ(0);
+  backface-visibility: hidden; /* Hardware acceleration */
 }
 
 .modal-instruction {
@@ -51,8 +53,6 @@
 @keyframes pulse {
   0%, 100% { 
     opacity: 1;
-    transform: translateZ(0); 
-    backface-visibility: hidden; /* Improved hardware acceleration */
   }
   50% { 
     opacity: 0.5;
