@@ -264,9 +264,9 @@ export default function Frame() {
       // Only register swipes that exceed minimum distance
       if (Math.abs(dx) > MIN_SWIPE_DISTANCE || Math.abs(dy) > MIN_SWIPE_DISTANCE) {
         if (Math.abs(dx) > Math.abs(dy)) {
-          direction = {x: Math.sign(dx), y: 0};
+          directionRef.current = {x: Math.sign(dx), y: 0};
         } else {
-          direction = {x: 0, y: Math.sign(dy)};
+          directionRef.current = {x: 0, y: Math.sign(dy)};
         }
         // Reset start position after valid swipe
         touchStartX = touchEndX;
