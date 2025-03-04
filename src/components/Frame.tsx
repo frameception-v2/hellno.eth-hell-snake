@@ -245,10 +245,6 @@ export default function Frame() {
     };
   }, []);
 
-  if (!isSDKLoaded) {
-    return <div>Loading...</div>;
-  }
-
   const [score, setScore] = useState(0);
   
   // Score animation effect
@@ -259,6 +255,10 @@ export default function Frame() {
       setTimeout(() => scoreElement.classList.remove('score-bounce'), 200);
     }
   }, [score]);
+
+  if (!isSDKLoaded) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div
