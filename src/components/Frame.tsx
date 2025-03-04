@@ -50,6 +50,14 @@ export default function Frame() {
   const inputQueueRef = useRef<Array<{x: number, y: number}>>([]);
   const [directionState, setDirectionState] = useState({ x: 0, y: 0 });
   const [canvasSize, setCanvasSize] = useState(300); // Dynamic canvas size
+  const [isMobile, setIsMobile] = useState(false);
+  const [showControls, setShowControls] = useState(false);
+
+  // Mobile detection
+  useEffect(() => {
+    const userAgent = typeof window !== 'undefined' ? window.navigator.userAgent : '';
+    setIsMobile(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent));
+  }, []);
 
   // Viewport resize handler with debouncing
   useEffect(() => {
@@ -377,15 +385,30 @@ export default function Frame() {
         </h1>
         <div className="crt-effect">
           <GameCanvas canvasRef={canvasRef} canvasSize={canvasSize} />
-          {/* Directional controls */}
-          <div className="mt-4 grid grid-cols-3 gap-2 select-none">
+          {/* Mobile controls toggle */}
+          {isMobile && (
             <button
-              className="control-btn bg-purple-500 hover:bg-purple-600 active:bg-purple-700"
-              onClick={() => handleDirectionChange(0, -1)}
-              onTouchStart={() => handleDirectionChange(0, -1)}
+              className="w-full py-3 mb-2 bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white rounded-lg transition-colors touch-manipulation"
+              onClick={() => setShowControls(!showControls)}
+              onTouchStart={(e) => {
+                e.preventDefault();
+                setShowControls(!showControls);
+              }}
             >
-              ↑
+              {showControls ? 'Hide Controls' : 'Show Controls'}
             </button>
+          )}
+
+          {/* Directional controls */}
+          {(showControls || !isMobile) && (
+            <div className="mt-4 grid grid-cols-3 gap-2 select-none touch-manipulation">
+              <button
+                className="control-btn bg-purple-500 hover:bg-purple-600 active:bg-purple-700 h-16 text-2xl"
+                onClick={() => handleDirectionChange(0, -1)}
+                onTouchStart={() => handleDirectionChange(0, -1)}
+              >
+                ↑
+              </button>
             <button
               className="control-btn bg-purple-500 hover:bg-purple-600 active:bg-purple-700"
               onClick={() => handleDirectionChange(-1, 0)}
@@ -407,7 +430,8 @@ export default function Frame() {
             >
               ↓
             </button>
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
