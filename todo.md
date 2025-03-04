@@ -11,7 +11,7 @@ Here's the structured todo list following your requirements:
 - [ ] Build animated score display with DOM text node (`ui.js`)
 - [ ] Implement directional control buttons with hover states (`controls.css`)
 - [ ] Create victory/defeat modals with CSS transitions (`modals.css`)
-- [ ] Add touch event listeners for mobile controls (`input.js`)
+- [x] Add touch event listeners for mobile controls (`input.js`)
 
 **API Integration**
 - [ ] Implement client-side OG image generation canvas (`share.js`)

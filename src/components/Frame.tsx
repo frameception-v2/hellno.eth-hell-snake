@@ -192,28 +192,48 @@ export default function Frame() {
     let touchStartX = 0;
     let touchStartY = 0;
     
+    const MIN_SWIPE_DISTANCE = 15; // Minimum 15px swipe to register
+    let isTouchActive = false;
+
     const handleTouchStart = (e: TouchEvent) => {
+      isTouchActive = true;
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
+      canvas.style.borderColor = '#ef4444'; // Visual feedback
       e.preventDefault();
     };
 
     const handleTouchMove = (e: TouchEvent) => {
+      if (!isTouchActive) return;
+      
       const touchEndX = e.touches[0].clientX;
       const touchEndY = e.touches[0].clientY;
       const dx = touchEndX - touchStartX;
       const dy = touchEndY - touchStartY;
 
-      if (Math.abs(dx) > Math.abs(dy)) {
-        direction = {x: Math.sign(dx), y: 0};
-      } else {
-        direction = {x: 0, y: Math.sign(dy)};
+      // Only register swipes that exceed minimum distance
+      if (Math.abs(dx) > MIN_SWIPE_DISTANCE || Math.abs(dy) > MIN_SWIPE_DISTANCE) {
+        if (Math.abs(dx) > Math.abs(dy)) {
+          direction = {x: Math.sign(dx), y: 0};
+        } else {
+          direction = {x: 0, y: Math.sign(dy)};
+        }
+        // Reset start position after valid swipe
+        touchStartX = touchEndX;
+        touchStartY = touchEndY;
       }
       e.preventDefault();
     };
 
+    const handleTouchEnd = () => {
+      isTouchActive = false;
+      canvas.style.borderColor = '#c026d3'; // Reset visual feedback
+    };
+
     canvas.addEventListener('touchstart', handleTouchStart);
     canvas.addEventListener('touchmove', handleTouchMove);
+    canvas.addEventListener('touchend', handleTouchEnd);
+    canvas.addEventListener('touchcancel', handleTouchEnd);
     
     // Start game loop
     animationFrameId = requestAnimationFrame(gameLoop);
