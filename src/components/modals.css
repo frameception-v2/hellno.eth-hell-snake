@@ -54,11 +54,12 @@
 }
 
 @keyframes pulse {
-  0%, 100% { 
+  0%,
+  100% {
     opacity: 1;
     transform: translateZ(0); /* Force GPU layer */
   }
-  50% { 
+  50% {
     opacity: 0.5;
     transform: translateZ(0);
   }
@@ -66,10 +67,11 @@
 
 /* Hardware-accelerated bounce animation */
 @keyframes bounce {
-  0%, 100% { 
-    transform: translate3d(0, 0, 0); 
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
   }
-  50% { 
-    transform: translate3d(0, -10px, 0); 
+  50% {
+    transform: translate3d(0, -10px, 0);
   }
 }
