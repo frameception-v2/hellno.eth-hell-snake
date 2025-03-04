@@ -258,6 +258,11 @@ export default function Frame() {
         paddingRight: context?.client.safeAreaInsets?.right ?? 0,
       }}
     >
+      {/* Farcaster Frame v2 Meta Tags */}
+      <meta property="fc:frame" content="vNext" />
+      <meta property="fc:frame:image" content={`${process.env.NEXT_PUBLIC_SITE_URL}/api/opengraph-image`} />
+      <meta property="og:image" content={`${process.env.NEXT_PUBLIC_SITE_URL}/api/opengraph-image`} />
+      <meta property="fc:frame:post_url" content={`${process.env.NEXT_PUBLIC_SITE_URL}/api/frame`} />
       <div className="w-[300px] mx-auto py-2 px-2">
         <h1 className="text-2xl font-bold text-center mb-4 text-gray-700 dark:text-gray-300">
           {PROJECT_TITLE}
