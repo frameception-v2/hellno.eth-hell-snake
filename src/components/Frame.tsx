@@ -13,6 +13,7 @@ import {
   CardDescription,
   CardContent,
 } from "~/components/ui/card";
+import "./modals.css";
 
 import { config } from "~/components/providers/WagmiProvider";
 import { truncateAddress } from "~/lib/truncateAddress";
@@ -329,12 +330,12 @@ export default function Frame() {
       </div>
       
       {gameState !== 'playing' && (
-        <div className="absolute inset-0 bg-black/80 flex items-center justify-center text-4xl font-bold">
-          <div className="text-center">
-            <p className="animate-pulse">
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <p className="modal-message">
               {gameState === 'victory' ? '🎉 You Won!' : '💥 Game Over!'}
             </p>
-            <p className="text-2xl mt-4">Swipe to restart</p>
+            <p className="modal-instruction">Swipe to restart</p>
           </div>
         </div>
       )}

@@ -1,0 +1,53 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeIn 0.3s ease-out forwards;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: rgba(31, 31, 31, 0.95);
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  transform: translateY(20px);
+  animation: slideUp 0.3s ease-out 0.2s forwards;
+  border: 2px solid #c026d3;
+  box-shadow: 0 0 20px rgba(192, 38, 211, 0.3);
+  max-width: 90%;
+  touch-action: manipulation;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); }
+  to { transform: translateY(0); }
+}
+
+.modal-message {
+  font-size: 2.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #c026d3;
+  animation: pulse 1.5s infinite;
+}
+
+.modal-instruction {
+  font-size: 1.5rem;
+  color: #ef4444;
+  margin-top: 1rem;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
