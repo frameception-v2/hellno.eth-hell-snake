@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta property="fc:frame" content="vNext">
+  <meta property="fc:frame:post_url" content="https://your-frame-endpoint.com">
+  <title>Farcaster Frame Game</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      overflow: hidden;
+      background: #000;
+      touch-action: manipulation;
+    }
+    
+    #gameCanvas {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 100vw;
+      max-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas"></canvas>
+
+  <script>
+    // Initialize canvas with 20x20 grid
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    function resizeCanvas() {
+      const size = Math.min(window.innerWidth, window.innerHeight);
+      canvas.width = size;
+      canvas.height = size;
+      ctx.scale(size / 20, size / 20); // 20x20 grid
+    }
+    
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    
+    // Basic animation frame loop
+    function gameLoop() {
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, 20, 20);
+      
+      // Temporary demo - draw grid borders
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 0.1;
+      ctx.strokeRect(0, 0, 20, 20);
+      
+      requestAnimationFrame(gameLoop);
+    }
+    
+    gameLoop();
+  </script>
+</body>
+</html>
