@@ -41,9 +41,18 @@ function GameCanvas({ canvasRef }: { canvasRef: React.RefObject<HTMLCanvasElemen
   );
 }
 
+// Direction control handler
+function handleDirectionChange(x: number, y: number) {
+  // Prevent 180 degree turns
+  const currentDirection = direction;
+  if (currentDirection.x === -x || currentDirection.y === -y) return;
+  direction = {x, y};
+}
+
 export default function Frame() {
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [context, setContext] = useState<Context.FrameContext>();
+  const [direction, setDirection] = useState({x: 0, y: 0});
 
   const [added, setAdded] = useState(false);
 
@@ -340,6 +349,37 @@ export default function Frame() {
         </h1>
         <div className="crt-effect">
           <GameCanvas canvasRef={canvasRef} />
+          {/* Directional controls */}
+          <div className="mt-4 grid grid-cols-3 gap-2 select-none">
+            <button
+              className="control-btn bg-purple-500 hover:bg-purple-600 active:bg-purple-700"
+              onClick={() => handleDirectionChange(0, -1)}
+              onTouchStart={() => handleDirectionChange(0, -1)}
+            >
+              ↑
+            </button>
+            <button
+              className="control-btn bg-purple-500 hover:bg-purple-600 active:bg-purple-700"
+              onClick={() => handleDirectionChange(-1, 0)}
+              onTouchStart={() => handleDirectionChange(-1, 0)}
+            >
+              ←
+            </button>
+            <button
+              className="control-btn bg-purple-500 hover:bg-purple-600 active:bg-purple-700"
+              onClick={() => handleDirectionChange(1, 0)}
+              onTouchStart={() => handleDirectionChange(1, 0)}
+            >
+              →
+            </button>
+            <button
+              className="control-btn bg-purple-500 hover:bg-purple-600 active:bg-purple-700 col-start-2"
+              onClick={() => handleDirectionChange(0, 1)}
+              onTouchStart={() => handleDirectionChange(0, 1)}
+            >
+              ↓
+            </button>
+          </div>
         </div>
       </div>
     </div>
