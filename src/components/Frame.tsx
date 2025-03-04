@@ -41,18 +41,19 @@ function GameCanvas({ canvasRef }: { canvasRef: React.RefObject<HTMLCanvasElemen
   );
 }
 
-// Direction control handler
-function handleDirectionChange(x: number, y: number) {
-  // Prevent 180 degree turns
-  const currentDirection = direction;
-  if (currentDirection.x === -x || currentDirection.y === -y) return;
-  direction = {x, y};
-}
-
 export default function Frame() {
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [context, setContext] = useState<Context.FrameContext>();
-  const [direction, setDirection] = useState({x: 0, y: 0});
+  const directionRef = useRef({ x: 0, y: 0 });
+  const [directionState, setDirectionState] = useState({ x: 0, y: 0 }); // Visual updates only
+
+  // Direction control handler
+  const handleDirectionChange = (x: number, y: number) => {
+    const currentDirection = directionRef.current;
+    if (currentDirection.x === -x || currentDirection.y === -y) return;
+    directionRef.current = { x, y };
+    setDirectionState({ x, y }); // Update state for visual feedback
+  };
 
   const [added, setAdded] = useState(false);
 
@@ -156,7 +157,6 @@ export default function Frame() {
     let animationFrameId: number;
     const cellSize = CANVAS_SIZE / 20;
     let snake = [{x: 10, y: 10}];
-    let direction = {x: 0, y: 0};
     let food = { x: 15, y: 15 };
 
     // Game loop
@@ -293,7 +293,7 @@ export default function Frame() {
       canvas.removeEventListener('touchstart', handleTouchStart);
       canvas.removeEventListener('touchmove', handleTouchMove);
     };
-  }, []);
+  }, [gameState, resetGame, score]); // Added missing dependencies
 
   const [score, setScore] = useState(0);
   
