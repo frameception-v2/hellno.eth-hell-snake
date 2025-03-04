@@ -127,6 +127,14 @@ export default function Frame() {
   }, [isSDKLoaded, addFrame]);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [gameState, setGameState] = useState<'playing' | 'victory' | 'defeat'>('playing');
+  const [food, setFood] = useState({ x: 15, y: 15 });
+
+  const resetGame = useCallback(() => {
+    setGameState('playing');
+    setScore(0);
+    setFood({ x: 15, y: 15 });
+  }, []);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -140,6 +148,7 @@ export default function Frame() {
     const cellSize = CANVAS_SIZE / 20;
     let snake = [{x: 10, y: 10}];
     let direction = {x: 0, y: 0};
+    let food = { x: 15, y: 15 };
 
     // Game loop
     const gameLoop = (timestamp: number) => {
@@ -149,12 +158,38 @@ export default function Frame() {
       if (deltaTime > 100) {
         lastTime = timestamp;
         
-        // Update snake position
-        const newHead = {
-          x: snake[0].x + direction.x,
-          y: snake[0].y + direction.y
-        };
-        snake = [newHead, ...snake.slice(0, -1)];
+        // Only update if playing
+        if (gameState === 'playing') {
+          // Update snake position
+          const newHead = {
+            x: snake[0].x + direction.x,
+            y: snake[0].y + direction.y
+          };
+
+          // Collision detection
+          if (newHead.x < 0 || newHead.x >= 20 || newHead.y < 0 || newHead.y >= 20 ||
+              snake.some(segment => segment.x === newHead.x && segment.y === newHead.y)) {
+            setGameState('defeat');
+          }
+
+          // Food consumption
+          if (newHead.x === food.x && newHead.y === food.y) {
+            // Grow snake and spawn new food
+            snake = [newHead, ...snake];
+            setScore(prev => prev + 1);
+            food = {
+              x: Math.floor(Math.random() * 20),
+              y: Math.floor(Math.random() * 20)
+            };
+            setFood(food);
+            
+            if (score >= 9) { // Win condition
+              setGameState('victory');
+            }
+          } else {
+            snake = [newHead, ...snake.slice(0, -1)];
+          }
+        }
       }
 
       // Clear canvas
@@ -199,6 +234,12 @@ export default function Frame() {
       isTouchActive = true;
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
+      
+      if (gameState !== 'playing') {
+        resetGame();
+        direction = {x: 0, y: 0}; // Reset direction on restart
+      }
+      
       canvas.style.borderColor = '#ef4444'; // Visual feedback
       e.preventDefault();
     };
@@ -277,6 +318,17 @@ export default function Frame() {
       >
         Score: {score}
       </div>
+      
+      {gameState !== 'playing' && (
+        <div className="absolute inset-0 bg-black/80 flex items-center justify-center text-4xl font-bold">
+          <div className="text-center">
+            <p className="animate-pulse">
+              {gameState === 'victory' ? '🎉 You Won!' : '💥 Game Over!'}
+            </p>
+            <p className="text-2xl mt-4">Swipe to restart</p>
+          </div>
+        </div>
+      )}
       {/* Farcaster Frame v2 Meta Tags */}
       <meta property="fc:frame" content="vNext" />
       <meta property="fc:frame:image" content={`${process.env.NEXT_PUBLIC_SITE_URL}/api/opengraph-image`} />
