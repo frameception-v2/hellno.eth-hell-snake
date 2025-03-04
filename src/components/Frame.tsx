@@ -254,7 +254,7 @@ export default function Frame() {
       
       if (gameState !== 'playing') {
         resetGame();
-        directionRef.current = {x: 0, y: 0}; // Reset direction on restart
+        inputQueueRef.current = []; // Clear input queue on restart
       }
       
       canvas.style.borderColor = '#ef4444'; // Visual feedback
