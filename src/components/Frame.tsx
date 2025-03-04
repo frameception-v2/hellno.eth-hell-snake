@@ -172,8 +172,8 @@ export default function Frame() {
         if (gameState === 'playing') {
           // Update snake position
           const newHead = {
-            x: snake[0].x + direction.x,
-            y: snake[0].y + direction.y
+            x: snake[0].x + directionRef.current.x,
+            y: snake[0].y + directionRef.current.y
           };
 
           // Collision detection
@@ -247,7 +247,7 @@ export default function Frame() {
       
       if (gameState !== 'playing') {
         resetGame();
-        direction = {x: 0, y: 0}; // Reset direction on restart
+        directionRef.current = {x: 0, y: 0}; // Reset direction on restart
       }
       
       canvas.style.borderColor = '#ef4444'; // Visual feedback
