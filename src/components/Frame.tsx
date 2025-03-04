@@ -22,6 +22,7 @@ import { useSession } from "next-auth/react";
 import { createStore } from "mipd";
 import { Label } from "~/components/ui/label";
 import { PROJECT_TITLE } from "~/lib/constants";
+import { checkCollision } from "~/lib/physics";
 
 const CANVAS_SIZE = 300; // 300px for 20x20 grid (15px per cell)
 
@@ -177,8 +178,7 @@ export default function Frame() {
           };
 
           // Collision detection
-          if (newHead.x < 0 || newHead.x >= 20 || newHead.y < 0 || newHead.y >= 20 ||
-              snake.some(segment => segment.x === newHead.x && segment.y === newHead.y)) {
+          if (checkCollision([newHead, ...snake], 20)) {
             setGameState('defeat');
           }
 

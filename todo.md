@@ -15,7 +15,7 @@ Here's the structured todo list following your requirements:
 
 **Client-Side State Management**
 - [x] Build game state machine (playing/victory/defeat) (`state.js`)
-- [ ] Implement collision detection system (`physics.js`)
+- [x] Implement collision detection system (`physics.ts`)
 - [ ] Create food spawning algorithm with position validation (`food.js`)
 - [ ] Set up directional input queue system (`input.js`)
 
