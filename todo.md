@@ -3,7 +3,7 @@ Here's the structured todo list following your requirements:
 **Frame Structure**
 - [x] Create base HTML frame with viewport meta tags (`index.html`)
 - [x] Initialize Canvas element with 20x20 grid coordinate system (`game.js`)
-- [ ] Set up `requestAnimationFrame` game loop structure (`game.js`)
+- [x] Set up `requestAnimationFrame` game loop structure (`game.js`)
 - [ ] Implement Farcaster Frame v2 meta tags for compatibility (`index.html`)
 
 **UI Components & Interactions**
