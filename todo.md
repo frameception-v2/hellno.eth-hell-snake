@@ -13,22 +13,11 @@ Here's the structured todo list following your requirements:
 - [ ] Create victory/defeat modals with CSS transitions (`modals.css`)
 - [x] Add touch event listeners for mobile controls (`input.js`)
 
-**API Integration**
-- [ ] Implement client-side OG image generation canvas (`share.js`)
-- [ ] Configure Frame post message metadata (`meta.js`)
-- [ ] Create victory share payload formatter (`share.js`)
-
 **Client-Side State Management**
 - [ ] Build game state machine (playing/victory/defeat) (`state.js`)
 - [ ] Implement collision detection system (`physics.js`)
 - [ ] Create food spawning algorithm with position validation (`food.js`)
 - [ ] Set up directional input queue system (`input.js`)
-
-**User Experience & Animations**
-- [ ] Add canvas-based CRT scanlines effect (`effects.js`)
-- [ ] Implement snake segment glow rendering (`snake.js`)
-- [ ] Create food particle pulse animation (`food.js`)
-- [ ] Build screen flicker effect on state transitions (`effects.js`)
 
 **Mobile Optimization**
 - [ ] Implement viewport resize handler with debouncing (`responsive.js`)
