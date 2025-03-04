@@ -24,7 +24,7 @@ Here's the structured todo list following your requirements:
 - [x] Add `touch-action: manipulation` CSS property (`mobile.css`)
 - [x] Create mobile control visibility toggle (`mobile.js`)
 - [x] Set minimum 60px touch target sizes (`controls.css`)
-- [ ] Implement hardware-accelerated CSS transforms (`animations.css`)
+- [x] Implement hardware-accelerated CSS transforms (`animations.css`)
 
 Dependency Order:
 1. Frame Structure → All other categories
