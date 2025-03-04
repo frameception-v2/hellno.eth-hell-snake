@@ -17,7 +17,7 @@ Here's the structured todo list following your requirements:
 - [x] Build game state machine (playing/victory/defeat) (`state.js`)
 - [x] Implement collision detection system (`physics.ts`)
 - [x] Create food spawning algorithm with position validation (`food.ts`)
-- [ ] Set up directional input queue system (`input.js`)
+- [x] Set up directional input queue system (`input.js`)
 
 **Mobile Optimization**
 - [ ] Implement viewport resize handler with debouncing (`responsive.js`)

@@ -47,15 +47,19 @@ function GameCanvas({ canvasRef }: { canvasRef: React.RefObject<HTMLCanvasElemen
 export default function Frame() {
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [context, setContext] = useState<Context.FrameContext>();
-  const directionRef = useRef({ x: 0, y: 0 });
-  const [directionState, setDirectionState] = useState({ x: 0, y: 0 }); // Visual updates only
+  const inputQueueRef = useRef<Array<{x: number, y: number}>>([]);
+  const [directionState, setDirectionState] = useState({ x: 0, y: 0 });
 
-  // Direction control handler
+  // Direction control handler with queueing
   const handleDirectionChange = (x: number, y: number) => {
-    const currentDirection = directionRef.current;
-    if (currentDirection.x === -x || currentDirection.y === -y) return;
-    directionRef.current = { x, y };
-    setDirectionState({ x, y }); // Update state for visual feedback
+    const lastInput = inputQueueRef.current[inputQueueRef.current.length - 1] || {x: 0, y: 0};
+    
+    // Prevent 180-degree turns and duplicate inputs
+    if ((x !== 0 && x === -lastInput.x) || (y !== 0 && y === -lastInput.y)) return;
+    if (lastInput.x === x && lastInput.y === y) return;
+    
+    inputQueueRef.current.push({x, y});
+    setDirectionState({x, y});
   };
 
   const [added, setAdded] = useState(false);
@@ -174,10 +178,13 @@ export default function Frame() {
         
         // Only update if playing
         if (gameState === 'playing') {
+          // Process input queue
+          const nextDirection = inputQueueRef.current.shift() || {x: 0, y: 0};
+          
           // Update snake position
           const newHead = {
-            x: snake[0].x + directionRef.current.x,
-            y: snake[0].y + directionRef.current.y
+            x: snake[0].x + nextDirection.x,
+            y: snake[0].y + nextDirection.y
           };
 
           // Collision detection
