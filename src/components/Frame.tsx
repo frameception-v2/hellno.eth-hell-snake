@@ -22,19 +22,22 @@ import { createStore } from "mipd";
 import { Label } from "~/components/ui/label";
 import { PROJECT_TITLE } from "~/lib/constants";
 
-function ExampleCard() {
+const CANVAS_SIZE = 300; // 300px for 20x20 grid (15px per cell)
+
+function GameCanvas({ canvasRef }: { canvasRef: React.RefObject<HTMLCanvasElement> }) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Welcome to the Frame Template</CardTitle>
-        <CardDescription>
-          This is an example card that you can customize or remove
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Label>Place content in a Card here.</Label>
-      </CardContent>
-    </Card>
+    <canvas
+      ref={canvasRef}
+      width={CANVAS_SIZE}
+      height={CANVAS_SIZE}
+      style={{
+        touchAction: "none",
+        imageRendering: "crisp-edges",
+        border: "2px solid #c026d3",
+        borderRadius: "8px",
+        backgroundColor: "#1f1f1f",
+      }}
+    />
   );
 }
 
@@ -127,6 +130,20 @@ export default function Frame() {
     return <div>Loading...</div>;
   }
 
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (canvasRef.current) {
+      const ctx = canvasRef.current.getContext('2d');
+      if (ctx) {
+        // Set up grid coordinate system
+        ctx.scale(CANVAS_SIZE/20, CANVAS_SIZE/20);
+        ctx.fillStyle = '#1a1a1a';
+        ctx.fillRect(0, 0, 20, 20);
+      }
+    }
+  }, []);
+
   return (
     <div
       style={{
@@ -140,7 +157,7 @@ export default function Frame() {
         <h1 className="text-2xl font-bold text-center mb-4 text-gray-700 dark:text-gray-300">
           {PROJECT_TITLE}
         </h1>
-        <ExampleCard />
+        <GameCanvas canvasRef={canvasRef} />
       </div>
     </div>
   );
