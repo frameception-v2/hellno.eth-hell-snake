@@ -27,12 +27,12 @@ import { getNewFoodPosition } from "~/lib/food";
 
 const CANVAS_SIZE = 300; // 300px for 20x20 grid (15px per cell)
 
-function GameCanvas({ canvasRef }: { canvasRef: React.RefObject<HTMLCanvasElement> }) {
+function GameCanvas({ canvasRef, canvasSize }: { canvasRef: React.RefObject<HTMLCanvasElement>, canvasSize: number }) {
   return (
     <canvas
       ref={canvasRef}
-      width={CANVAS_SIZE}
-      height={CANVAS_SIZE}
+      width={canvasSize}
+      height={canvasSize}
       style={{
         touchAction: "none",
         imageRendering: "crisp-edges",
@@ -49,6 +49,28 @@ export default function Frame() {
   const [context, setContext] = useState<Context.FrameContext>();
   const inputQueueRef = useRef<Array<{x: number, y: number}>>([]);
   const [directionState, setDirectionState] = useState({ x: 0, y: 0 });
+  const [canvasSize, setCanvasSize] = useState(300); // Dynamic canvas size
+
+  // Viewport resize handler with debouncing
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
+    const handleResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        const newSize = Math.min(300, window.innerWidth - 32); // 32px padding
+        setCanvasSize(newSize);
+      }, 250);
+    };
+
+    // Initial call to set size
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   // Direction control handler with queueing
   const handleDirectionChange = (x: number, y: number) => {
@@ -164,7 +186,7 @@ export default function Frame() {
 
     let lastTime = 0;
     let animationFrameId: number;
-    const cellSize = CANVAS_SIZE / 20;
+    const cellSize = canvasSize / 20;
     let snake = [{x: 10, y: 10}];
     let food = { x: 15, y: 15 };
 
@@ -244,7 +266,7 @@ export default function Frame() {
     let touchStartX = 0;
     let touchStartY = 0;
     
-    const MIN_SWIPE_DISTANCE = 15; // Minimum 15px swipe to register
+    const MIN_SWIPE_DISTANCE = 0.05 * canvasSize; // 5% of canvas size
     let isTouchActive = false;
 
     const handleTouchStart = (e: TouchEvent) => {
@@ -354,7 +376,7 @@ export default function Frame() {
           {PROJECT_TITLE}
         </h1>
         <div className="crt-effect">
-          <GameCanvas canvasRef={canvasRef} />
+          <GameCanvas canvasRef={canvasRef} canvasSize={canvasSize} />
           {/* Directional controls */}
           <div className="mt-4 grid grid-cols-3 gap-2 select-none">
             <button

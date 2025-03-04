@@ -20,7 +20,7 @@ Here's the structured todo list following your requirements:
 - [x] Set up directional input queue system (`input.js`)
 
 **Mobile Optimization**
-- [ ] Implement viewport resize handler with debouncing (`responsive.js`)
+- [x] Implement viewport resize handler with debouncing (`responsive.js`)
 - [ ] Add `touch-action: manipulation` CSS property (`mobile.css`)
 - [ ] Create mobile control visibility toggle (`mobile.js`)
 - [ ] Set minimum 60px touch target sizes (`controls.css`)
