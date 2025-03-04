@@ -23,6 +23,7 @@ import { createStore } from "mipd";
 import { Label } from "~/components/ui/label";
 import { PROJECT_TITLE } from "~/lib/constants";
 import { checkCollision } from "~/lib/physics";
+import { getNewFoodPosition } from "~/lib/food";
 
 const CANVAS_SIZE = 300; // 300px for 20x20 grid (15px per cell)
 
@@ -146,7 +147,8 @@ export default function Frame() {
   const resetGame = useCallback(() => {
     setGameState('playing');
     setScore(0);
-    setFood({ x: 15, y: 15 });
+    // Generate valid initial food position
+    setFood(getNewFoodPosition([{x: 10, y: 10}], {x: -1, y: -1}));
   }, []);
 
   useEffect(() => {
@@ -188,10 +190,7 @@ export default function Frame() {
             // Grow snake and spawn new food
             snake = [newHead, ...snake];
             setScore(prev => prev + 1);
-            food = {
-              x: Math.floor(Math.random() * 20),
-              y: Math.floor(Math.random() * 20)
-            };
+            food = getNewFoodPosition(snake, food);
             setFood(food);
             
             if (score >= 9) { // Win condition
