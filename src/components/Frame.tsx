@@ -70,7 +70,7 @@ export default function Frame() {
       window.removeEventListener('resize', handleResize);
       clearTimeout(timeoutId);
     };
-  }, []);
+  }, [canvasSize]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Direction control handler with queueing
   const handleDirectionChange = (x: number, y: number) => {
@@ -294,9 +294,9 @@ export default function Frame() {
       // Only register swipes that exceed minimum distance
       if (Math.abs(dx) > MIN_SWIPE_DISTANCE || Math.abs(dy) > MIN_SWIPE_DISTANCE) {
         if (Math.abs(dx) > Math.abs(dy)) {
-          directionRef.current = {x: Math.sign(dx), y: 0};
+          inputQueueRef.current.push({x: Math.sign(dx), y: 0});
         } else {
-          directionRef.current = {x: 0, y: Math.sign(dy)};
+          inputQueueRef.current.push({x: 0, y: Math.sign(dy)});
         }
         // Reset start position after valid swipe
         touchStartX = touchEndX;
