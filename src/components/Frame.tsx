@@ -401,9 +401,10 @@ export default function Frame() {
 
           {/* Directional controls */}
           {(showControls || !isMobile) && (
-            <div className="mt-4 grid grid-cols-3 gap-2 select-none touch-manipulation">
+            <div className="mt-4 grid grid-cols-3 gap-4 select-none touch-manipulation">
               <button
-                className="control-btn bg-purple-500 hover:bg-purple-600 active:bg-purple-700 h-16 text-2xl"
+                className="control-btn bg-purple-500 hover:bg-purple-600 active:bg-purple-700 text-2xl"
+                style={{ minWidth: '60px', minHeight: '60px' }}
                 onClick={() => handleDirectionChange(0, -1)}
                 onTouchStart={() => handleDirectionChange(0, -1)}
               >
@@ -411,6 +412,7 @@ export default function Frame() {
               </button>
             <button
               className="control-btn bg-purple-500 hover:bg-purple-600 active:bg-purple-700"
+              style={{ minWidth: '60px', minHeight: '60px' }}
               onClick={() => handleDirectionChange(-1, 0)}
               onTouchStart={() => handleDirectionChange(-1, 0)}
             >
@@ -425,6 +427,7 @@ export default function Frame() {
             </button>
             <button
               className="control-btn bg-purple-500 hover:bg-purple-600 active:bg-purple-700 col-start-2"
+              style={{ minWidth: '60px', minHeight: '60px' }}
               onClick={() => handleDirectionChange(0, 1)}
               onTouchStart={() => handleDirectionChange(0, 1)}
             >
