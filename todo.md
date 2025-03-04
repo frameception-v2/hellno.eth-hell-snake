@@ -7,7 +7,7 @@ Here's the structured todo list following your requirements:
 - [x] Implement Farcaster Frame v2 meta tags for compatibility (`index.html`)
 
 **UI Components & Interactions**
-- [ ] Create CRT screen effect using CSS radial gradients (`styles.css`)
+- [x] Create CRT screen effect using CSS radial gradients (`styles.css`)
 - [ ] Build animated score display with DOM text node (`ui.js`)
 - [ ] Implement directional control buttons with hover states (`controls.css`)
 - [ ] Create victory/defeat modals with CSS transitions (`modals.css`)
