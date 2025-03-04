@@ -42,7 +42,6 @@ function GameCanvas({ canvasRef }: { canvasRef: React.RefObject<HTMLCanvasElemen
 }
 
 export default function Frame() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [context, setContext] = useState<Context.FrameContext>();
 
