@@ -141,6 +141,7 @@ export default function Frame() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [gameState, setGameState] = useState<'playing' | 'victory' | 'defeat'>('playing');
   const [food, setFood] = useState({ x: 15, y: 15 });
+  const [score, setScore] = useState(0);
 
   const resetGame = useCallback(() => {
     setGameState('playing');
@@ -295,8 +296,6 @@ export default function Frame() {
       canvas.removeEventListener('touchmove', handleTouchMove);
     };
   }, [gameState, resetGame, score]); // Added missing dependencies
-
-  const [score, setScore] = useState(0);
   
   // Score animation effect
   useEffect(() => {
