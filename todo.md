@@ -21,7 +21,7 @@ Here's the structured todo list following your requirements:
 
 **Mobile Optimization**
 - [x] Implement viewport resize handler with debouncing (`responsive.js`)
-- [ ] Add `touch-action: manipulation` CSS property (`mobile.css`)
+- [x] Add `touch-action: manipulation` CSS property (`mobile.css`)
 - [ ] Create mobile control visibility toggle (`mobile.js`)
 - [ ] Set minimum 60px touch target sizes (`controls.css`)
 - [ ] Implement hardware-accelerated CSS transforms (`animations.css`)

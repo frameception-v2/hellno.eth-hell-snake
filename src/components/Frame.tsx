@@ -34,7 +34,7 @@ function GameCanvas({ canvasRef, canvasSize }: { canvasRef: React.RefObject<HTML
       width={canvasSize}
       height={canvasSize}
       style={{
-        touchAction: "none",
+        touchAction: "manipulation",
         imageRendering: "crisp-edges",
         border: "2px solid #c026d3",
         borderRadius: "8px",
