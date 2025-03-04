@@ -42,6 +42,7 @@ function GameCanvas({ canvasRef }: { canvasRef: React.RefObject<HTMLCanvasElemen
 }
 
 export default function Frame() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [context, setContext] = useState<Context.FrameContext>();
 
@@ -126,23 +127,17 @@ export default function Frame() {
     }
   }, [isSDKLoaded, addFrame]);
 
-  if (!isSDKLoaded) {
-    return <div>Loading...</div>;
-  }
-
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     if (canvasRef.current) {
-      const ctx = canvasRef.current.getContext('2d');
-      if (ctx) {
-        // Set up grid coordinate system
-        ctx.scale(CANVAS_SIZE/20, CANVAS_SIZE/20);
-        ctx.fillStyle = '#1a1a1a';
-        ctx.fillRect(0, 0, 20, 20);
-      }
+      initializeGame(canvasRef.current);
     }
   }, []);
+
+  if (!isSDKLoaded) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div
